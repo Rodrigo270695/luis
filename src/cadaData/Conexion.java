@@ -5,8 +5,8 @@ import java.sql.*;
 
 public class Conexion {
     
-    private final String URL ="jdbc:postgresql://localhost:3308/bd_vehiculo";
-    private final String USUARIO ="root";
+    private final String URL ="jdbc:postgresql://localhost:5432/bd_vehiculo";
+    private final String USUARIO ="postgres";
     private final String PASSWORD ="admin";
     
     public Connection conectar(){

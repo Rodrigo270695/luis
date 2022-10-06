@@ -19,7 +19,7 @@ public class VehiculoControlador {
     public List listar() {
         
         List lista = new ArrayList();
-        sql = "SELECT * FROM modelo";
+        sql = "SELECT * FROM vehiculo";
 
         try {
 

@@ -1,13 +1,48 @@
-
 package capaCliente;
+
+import cadaData.VehiculoControlador;
+import capaNegocio.Vehiculo;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
 
 public class FrmGestionarVehiculo extends javax.swing.JInternalFrame {
 
+    VehiculoControlador vehiculoC = new VehiculoControlador();
 
     public FrmGestionarVehiculo() {
         initComponents();
+        listar();
     }
 
+    void listar() {
+
+        String columas[] = {"ID", "MATRICULA", "MARCA", "COLOR", "AÑO", "MODELO"};
+        DefaultTableModel modelo = new DefaultTableModel();
+
+        for (String columa : columas) {
+            modelo.addColumn(columa);
+        }
+
+        List<Vehiculo> lista = vehiculoC.listar();
+        Object obj[] = new Object[6];
+
+        for (Vehiculo vehiculo : lista) {
+            obj[0] = vehiculo.getVehiculoId();
+            obj[1] = vehiculo.getMatricula();
+            obj[2] = vehiculo.getMarca();
+            obj[3] = vehiculo.getColor();
+            obj[4] = vehiculo.getAnio();
+            obj[5] = vehiculo.getModelo().getNombre();
+
+            if (vehiculo.getEstado() == 'A') {
+                modelo.addRow(obj);
+            }
+
+        }
+
+        tblListado.setModel(modelo);
+
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
