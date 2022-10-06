@@ -184,6 +184,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtBuscar">
+      <Events>
+        <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtBuscarKeyReleased"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnRegistrar">
       <Properties>

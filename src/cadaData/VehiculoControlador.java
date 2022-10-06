@@ -1,4 +1,3 @@
-
 package cadaData;
 
 import capaNegocio.Modelo;
@@ -9,16 +8,16 @@ import java.sql.*;
 import org.postgresql.util.PSQLException;
 
 public class VehiculoControlador {
-    
+
     ModeloControlador modeloc = new ModeloControlador();
     Conexion estado = new Conexion();
     Connection con;
     PreparedStatement ps;
     ResultSet rs;
     String sql = "";
-    
+
     public List listar() {
-        
+
         List lista = new ArrayList();
         sql = "SELECT * FROM vehiculo";
 
@@ -32,8 +31,8 @@ public class VehiculoControlador {
                 Vehiculo vehiculo = new Vehiculo();
                 vehiculo.setVehiculoId(rs.getInt(1));
                 vehiculo.setMatricula(rs.getString(2));
-                vehiculo.setMarca(rs.getString(3)); 
-                vehiculo.setColor(rs.getString(4)); 
+                vehiculo.setMarca(rs.getString(3));
+                vehiculo.setColor(rs.getString(4));
                 vehiculo.setAnio(rs.getShort(5));
                 vehiculo.setModelo((Modelo) modeloc.obtenerdato(rs.getInt(6)));
                 vehiculo.setEstado(rs.getString(7).charAt(0));
@@ -53,9 +52,9 @@ public class VehiculoControlador {
         }
 
         return lista;
-        
+
     }
-    
+
     public void registrar(Vehiculo vehiculo) throws Exception {
 
         sql = "insert into vehiculo(matricula,marca,color,anio,modelo_id) values(?,?,?,?,?)";
@@ -85,10 +84,10 @@ public class VehiculoControlador {
         }
 
     }
-    
-    public void darBaja(int id){
-        
-        sql = "UPDATE vehiculo SET estado = 'I' WHERE vehiculo_id = "+id;
+
+    public void darBaja(int id) {
+
+        sql = "UPDATE vehiculo SET estado = 'I' WHERE vehiculo_id = " + id;
 
         try {
 
@@ -106,13 +105,15 @@ public class VehiculoControlador {
                 ex.printStackTrace(System.err);
             }
         }
-        
+
     }
-    
+
     public List buscar(String texto) {
-        
+
         List lista = new ArrayList();
-        sql = "SELECT * FROM vehiculo";
+        sql = "select * from vehiculo where matricula like '%"+texto+"%' \n"
+                + "or marca like '%"+texto+"%'\n"
+                + "or color like '%"+texto+"%'";
 
         try {
 
@@ -124,8 +125,8 @@ public class VehiculoControlador {
                 Vehiculo vehiculo = new Vehiculo();
                 vehiculo.setVehiculoId(rs.getInt(1));
                 vehiculo.setMatricula(rs.getString(2));
-                vehiculo.setMarca(rs.getString(3)); 
-                vehiculo.setColor(rs.getString(4)); 
+                vehiculo.setMarca(rs.getString(3));
+                vehiculo.setColor(rs.getString(4));
                 vehiculo.setAnio(rs.getShort(5));
                 vehiculo.setModelo((Modelo) modeloc.obtenerdato(rs.getInt(6)));
                 vehiculo.setEstado(rs.getString(7).charAt(0));
@@ -145,7 +146,7 @@ public class VehiculoControlador {
         }
 
         return lista;
-        
+
     }
-    
+
 }

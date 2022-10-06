@@ -20,17 +20,17 @@ public class FrmGestionarVehiculo extends javax.swing.JInternalFrame {
         cargarModelos();
         listar();
     }
-    
-    void cargarModelos(){
-        
+
+    void cargarModelos() {
+
         cbxModelo.removeAllItems();
-        
+
         List<Modelo> lista = modeloC.listar();
-        
+
         for (Modelo modelo : lista) {
             cbxModelo.addItem(modelo.getNombre());
         }
-        
+
     }
 
     void listar() {
@@ -124,6 +124,12 @@ public class FrmGestionarVehiculo extends javax.swing.JInternalFrame {
         jLabel4.setText("Año:");
 
         jLabel5.setText("Buscar:");
+
+        txtBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtBuscarKeyReleased(evt);
+            }
+        });
 
         btnRegistrar.setText("Registrar");
         btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
@@ -257,31 +263,61 @@ public class FrmGestionarVehiculo extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
     private void btnDarBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDarBajaActionPerformed
-        
+
         if (idVehiculo == 0) {
             JOptionPane.showMessageDialog(this, "Debe selecionar un vehiculo");
-        }else{
-            
-            int r = JOptionPane.showConfirmDialog(this, "¿está seguro de dar de baja a la matrícula "+matricula+"?", "CONFIRMAR", 2);
-            
+        } else {
+
+            int r = JOptionPane.showConfirmDialog(this, "¿está seguro de dar de baja a la matrícula " + matricula + "?", "CONFIRMAR", 2);
+
             if (r == 0) {
                 vehiculoC.darBaja(idVehiculo);
                 listar();
                 limpiarCajas();
             }
         }
-        
-        
+
+
     }//GEN-LAST:event_btnDarBajaActionPerformed
 
     private void tblListadoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblListadoMouseClicked
-        
+
         int fila = tblListado.getSelectedRow();
-        
-        idVehiculo =  Integer.parseInt(tblListado.getValueAt(fila, 0).toString());
+
+        idVehiculo = Integer.parseInt(tblListado.getValueAt(fila, 0).toString());
         matricula = tblListado.getValueAt(fila, 1).toString();
-        
+
     }//GEN-LAST:event_tblListadoMouseClicked
+
+    private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
+        
+        String columas[] = {"ID", "MATRICULA", "MARCA", "COLOR", "AÑO", "MODELO"};
+        DefaultTableModel modelo = new DefaultTableModel();
+
+        for (String columa : columas) {
+            modelo.addColumn(columa);
+        }
+
+        List<Vehiculo> lista = vehiculoC.buscar(txtBuscar.getText());
+        Object obj[] = new Object[6];
+
+        for (Vehiculo vehiculo : lista) {
+            obj[0] = vehiculo.getVehiculoId();
+            obj[1] = vehiculo.getMatricula();
+            obj[2] = vehiculo.getMarca();
+            obj[3] = vehiculo.getColor();
+            obj[4] = vehiculo.getAnio();
+            obj[5] = vehiculo.getModelo().getNombre();
+
+            if (vehiculo.getEstado() == 'A') {
+                modelo.addRow(obj);
+            }
+
+        }
+
+        tblListado.setModel(modelo);
+        
+    }//GEN-LAST:event_txtBuscarKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
