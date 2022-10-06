@@ -5,7 +5,7 @@ import java.sql.*;
 
 public class Conexion {
     
-    private final String URL ="jdbc:mysql://localhost:3308/bd_caritas";
+    private final String URL ="jdbc:postgresql://localhost:3308/bd_vehiculo";
     private final String USUARIO ="root";
     private final String PASSWORD ="admin";
     
